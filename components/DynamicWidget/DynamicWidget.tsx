@@ -40,10 +40,10 @@ export const DynamicWidget = () => {
           variant='outlined'
           endIcon={<ChevronRight />}
         >
-          Play Now
+          Login
         </Button>
       )}
-      <DynamicUserProfile />
+      <DynamicUserProfile variant='dropdown' />
     </>
   );
 };

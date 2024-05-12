@@ -57,10 +57,11 @@ export const DynamicProvider: React.FC<PropsWithChildren> = ({ children }) => {
     <DynamicContextProvider
       settings={{
         // appLogoUrl: "https://luffy-eight.vercel.app/logo.png",
-        evmNetworks,
+        overrides: { evmNetworks },
         environmentId: process.env.NEXT_PUBLIC_DYNAMIC_ENVID || "",
         appName: "EthEstates",
         walletConnectors: [EthereumWalletConnectors],
+        
       }}
     >
       {children}
