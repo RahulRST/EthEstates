@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { PropertyCard } from "@/components";
+import axios from "axios";
 
 export const PropertyList = () => {
   const [properties, setProperties] = useState([]);
@@ -12,9 +13,9 @@ export const PropertyList = () => {
     const fetchProperties = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch("/api/properties");
-        const data = await response.json();
-        setProperties(data.properties);
+        const response = await axios.get("/api/properties");
+        const { properties } = await response.data;
+        setProperties(properties);
       } catch (error) {
         console.error("Error fetching properties:", error);
       } finally {
