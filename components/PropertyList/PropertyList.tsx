@@ -26,7 +26,7 @@ export const PropertyList = () => {
   }, []);
 
   return (
-    <div className="property-list">
+    <div className="flex flex-row flex-wrap gap-4">
       {isLoading ? (
         <p>Loading properties...</p>
       ) : (

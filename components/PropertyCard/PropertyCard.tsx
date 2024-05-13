@@ -1,18 +1,18 @@
-import { Card, CardContent, Typography, Button, CardActionArea, CardMedia } from '@mui/material';
+import { Card, CardContent, Typography, Button, CardActionArea, CardMedia, Avatar } from '@mui/material';
 
 export const PropertyCard = ({ property }: { property: any }) => {
   const { image, name, location, price } = property;
 
   return (
-        <Card className="bg-black text-white"
+        <Card className="bg-black text-white shadow-md shadow-blue-500"
         >
         <CardActionArea>
           <CardMedia
-            component="img"
-            height="140"
-            image={image}
-            alt={name}
-          />
+            component="div"
+            className='items-center justify-center flex p-4'
+          >
+            <Avatar sx={{ width: 56, height: 56 }} alt={name} src={"https://noun-api.com/beta/pfp?name="+name} />
+          </CardMedia>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {name}
