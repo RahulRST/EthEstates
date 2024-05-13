@@ -5,7 +5,7 @@ import {
   useDynamicContext
 } from '@dynamic-labs/sdk-react-core';
 import { Avatar, Button } from '@mui/material';
-import { ChevronRight } from '@mui/icons-material';
+import { LockOutlined } from '@mui/icons-material';
 import { useClientAuth } from '@/hooks';
 
 const styles = {
@@ -27,7 +27,7 @@ export const DynamicWidget = () => {
   const { address } = primaryWallet || {};
 
   return (
-    <>
+    <div className="px-6">
       {isAuthenticated ? (
         <Avatar
           onClick={() => setShowDynamicUserProfile(true)}
@@ -37,13 +37,15 @@ export const DynamicWidget = () => {
       ) : (
         <Button
           onClick={() => setShowAuthFlow(true)}
-          variant='outlined'
-          endIcon={<ChevronRight />}
+          className='rounded-xl self-end p-4 text-sm'
+          variant='contained'
+          color='primary'
+          endIcon={<LockOutlined />}
         >
           Login
         </Button>
       )}
       <DynamicUserProfile variant='dropdown' />
-    </>
+    </div>
   );
 };
