@@ -19,11 +19,11 @@ children: React.ReactNode;
         <html lang="en">
           <body className={inter.className}>
             <DynamicProvider>
-              <div className="flex min-h-screen flex-col items-center justify-between">
-              <Header />
-              {children}
-              <Footer />
-              </div>
+                <div className="flex min-h-screen flex-col items-center justify-between">
+                  <Header />
+                  {children}
+                  <Footer />
+                </div>
             </DynamicProvider>
         </body>
         </html>

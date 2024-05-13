@@ -4,7 +4,7 @@ export const PropertyCard = ({ property }: { property: any }) => {
   const { image, name, location, price } = property;
 
   return (
-        <Card className="bg-black text-white shadow-md shadow-blue-500"
+        <Card className="bg-black text-white shadow-md w-80 shadow-blue-500"
         >
         <CardActionArea>
           <CardMedia
@@ -14,7 +14,7 @@ export const PropertyCard = ({ property }: { property: any }) => {
             <Avatar sx={{ width: 56, height: 56 }} alt={name} src={"https://noun-api.com/beta/pfp?name="+name} />
           </CardMedia>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography className='text-wrap' gutterBottom variant="h5" component="div">
               {name}
             </Typography>
             {/* <Typography variant="body2" color="text.secondary">
