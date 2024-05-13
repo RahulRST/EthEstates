@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Rubik } from "next/font/google";
 import "./globals.css";
 import { DynamicProvider, Footer, Header } from "@/components";
 
-const inter = Inter({ subsets: ["latin"] });
+const rubik = Rubik({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
   title: "EthEstates",
@@ -17,7 +17,7 @@ children: React.ReactNode;
 }) {
     return (
         <html lang="en">
-          <body className={inter.className}>
+          <body className={rubik.className}>
             <DynamicProvider>
                 <div className="flex min-h-screen flex-col items-center justify-between">
                   <Header />
