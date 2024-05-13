@@ -1,12 +1,10 @@
-import { DynamicWidget } from "@/components";
-import Image from "next/image";
+import { PropertyList } from "@/components";
 
 export default function Home() {
   return (
     <main className="">
-      
-    Home
-      
+        <h2>My Properties</h2>
+        <PropertyList />
     </main>
   );
 }
