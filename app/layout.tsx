@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "./globals.css";
-import { DynamicProvider, Footer, Header } from "@/components";
+import { Footer, Header } from "@/components";
+import { DynamicProvider } from "@/lib";
 
 const rubik = Rubik({ subsets: ["latin"], weight: "400" });
 
