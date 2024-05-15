@@ -1,5 +1,5 @@
 import { useClientAuth } from "@/hooks";
-import { Card, CardContent, Typography, Button, CardActionArea, CardMedia, Avatar, Box } from "@mui/material";
+import { Card, CardContent, Typography, CardActionArea, CardMedia, Box } from "@mui/material";
 
 interface Property {
   id: string; // Change data type based on actual storage on-chain
@@ -18,7 +18,7 @@ interface Property {
 export const PropertyCard = ({ property }: { property: Property }) => {
   const { image, name, owner, location, price, description, leased } = property;
   const { isAuthenticated } = useClientAuth();
-  // Logic for handling "Lease Now" button click (replace with actual functionality)
+  
   const handleLeaseNow = async () => {
     if (!isAuthenticated) {
       alert("Please connect your wallet to lease this property.");

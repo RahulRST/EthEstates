@@ -45,7 +45,7 @@ export const DynamicWidget = () => {
           Login
         </Button>
       )}
-      <DynamicUserProfile variant='dropdown' />
+      <DynamicUserProfile variant='modal' />
     </div>
   );
 };
