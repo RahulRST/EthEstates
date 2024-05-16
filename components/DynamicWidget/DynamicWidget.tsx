@@ -37,8 +37,7 @@ export const DynamicWidget = () => {
       ) : (
         <Button
           onClick={() => setShowAuthFlow(true)}
-          className='rounded-xl self-end p-4 text-sm'
-          variant='contained'
+          variant='outlined'
           color='primary'
           endIcon={<LockOutlined />}
         >
