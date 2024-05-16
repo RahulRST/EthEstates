@@ -1,5 +1,3 @@
-"use client";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const navigation: any[] = [
@@ -9,29 +7,8 @@ const navigation: any[] = [
 import { DynamicWidget } from "../DynamicWidget";
 
 import Image from "next/image";
-import { useAccount, useChainId } from "wagmi";
-import { SafeAccountV0_2_0 as SafeAccount } from "abstractionkit";
-import { Chip, FormControlLabel, Switch, ToggleButton } from "@mui/material";
 
 export const Header = () => {
-  const [connectedAddress, setConnectedAddress] = useState<`0x${string}`>();
-  const [useSmartWallet, setUseSmartWallet] = useState<boolean>(false);
-  const [smartInitCode, setSmartInitCode] = useState<string>("");
-  const { address, isConnected } = useAccount();
-  const chainId = useChainId();
-
-  useEffect(() => {
-    setConnectedAddress(undefined);
-    if (!isConnected) return;
-    if (!useSmartWallet) {
-      setConnectedAddress(address);
-    } else if (useSmartWallet && address) {
-      let [accountAddress, initCode] =
-        SafeAccount.createAccountAddressAndInitCode([address]);
-      setConnectedAddress(accountAddress as `0x${string}`);
-      setSmartInitCode(initCode);
-    }
-  }, [address, isConnected, useSmartWallet, chainId]);
   return (
     <header className="inset-x-0 z-50">
       <nav
@@ -65,20 +42,6 @@ export const Header = () => {
           <div className="flex flex-1 lg:justify-end">
             <DynamicWidget />
           </div>
-        </div>
-        <div className="flex flex-row items-center gap-x-4">
-          <div className="flex flex-row items-center gap-x-4">
-            Wallet Address : <Chip variant="outlined" color="primary" label={connectedAddress} />
-          </div>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={useSmartWallet}
-                onChange={() => setUseSmartWallet(!useSmartWallet)}
-              />
-            }
-            label="Use Smart Wallet"
-          />
         </div>
       </nav>
     </header>

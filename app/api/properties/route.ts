@@ -1,17 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 interface Property {
-  id: string; // Change data type based on actual storage on-chain
+  id: string;
   name: string;
   description: string;
-  price: number; // Assuming price is returned as a number
+  price: number;
   location: string;
   image: string;
   owner: string;
   leased: boolean;
-  lessee?: string; // Optional lessee
-  leaseStart?: number; // Optional lease start timestamp (converted to a number)
-  leaseEnd?: number;   // Optional lease end timestamp (converted to a number)
+  lessee?: string;
+  leaseStart?: number;
+  leaseEnd?: number;
 }
 const properties: Property[] = [
   {
@@ -43,26 +43,6 @@ const properties: Property[] = [
     price: 1.2, // Assuming price is in ETH per week
     description: "Escape to the mountains and enjoy the tranquility of nature at this cozy cabin. Perfect for a weekend getaway or a longer stay amidst stunning scenery.",
     owner: "0xAbCdEf123456789001234567890AbCdEf", // Replace with actual owner address
-    leased: false,
-  },
-  {
-    id: crypto.randomUUID(),
-    image: "https://picsum.photos/id/1042/400/300", // Replace with your image URL
-    name: "Historic Victorian Home",
-    location: "San Francisco, California",
-    price: 3.0, // Assuming price is in ETH per week
-    description: "Step back in time and experience the charm of this historic Victorian home. Beautifully restored with modern amenities, this property offers a unique living space in a desirable location.",
-    owner: "0xFeDcBa09876543211234567890AbCdEf1", // Replace with actual owner address
-    leased: false,
-  },
-  {
-    id: crypto.randomUUID(),
-    image: "https://picsum.photos/id/1056/400/300", // Replace with your image URL
-    name: "Peaceful Countryside Cottage",
-    location: "Vermont",
-    price: 0.8, // Assuming price is in ETH per week
-    description: "Find peace and quiet at this charming countryside cottage. Surrounded by rolling hills and farmland, this property offers a relaxing escape from the hustle and bustle of city life.",
-    owner: "0x1234567890AbCdEf01234567890AbCdEf12", // Replace with actual owner address
     leased: false,
   },
 ];
