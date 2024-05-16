@@ -1,45 +1,54 @@
 "use client";
 
 import { PropertyList } from "@/components";
-import { useAccount } from "wagmi";
-import {
-  SafeAccountV0_2_0 as SafeAccount,
-} from "abstractionkit";
-import { Chip, FormControlLabel, Switch } from "@mui/material";
+import { useAccount, useWalletClient } from "wagmi";
+import { Badge, Chip, CircularProgress, FormControlLabel, LinearProgress, Skeleton, Switch } from "@mui/material";
 import { Rubik_Burned } from "next/font/google";
 import { useEffect, useState } from "react";
-import { getAddress } from "viem";
+
+import { createModularAccountAlchemyClient } from "@alchemy/aa-alchemy";
+import { WalletClientSigner, arbitrumSepolia } from "@alchemy/aa-core";
 
 const rubikBurned = Rubik_Burned({
   subsets: ["latin"],
   weight: "400",
 });
 
+const chain = arbitrumSepolia;
+
 export default function Page() {
-  const [connectedAddress, setConnectedAddress] = useState<`0x${string}`>();
+  const [connectedAddress, setConnectedAddress] = useState<any>();
   const [useSmartWallet, setUseSmartWallet] = useState<boolean>(false);
-  const [smartAccount, setSmartAccount] = useState<SafeAccount>();
+  const [smartAccount, setSmartAccount] = useState<any>();
+
+  const { data: walletClient }: { data: any } = useWalletClient();
+
   const { address, isConnected } = useAccount();
 
   useEffect(() => {
-    setConnectedAddress(undefined);
-    if (!isConnected) return;
-    if (!useSmartWallet) {
-      setConnectedAddress(address);
-    } else if (useSmartWallet && address) {
-      const newSmartAccount = SafeAccount.initializeNewAccount([address]);
-      setSmartAccount(newSmartAccount);
-      setConnectedAddress(getAddress(newSmartAccount.accountAddress));
-    }
-  }, [address, isConnected, useSmartWallet]);
-
+    const handleSmartWallet = async () => {
+      setConnectedAddress(undefined);
+      if (useSmartWallet) {
+          const smartAccountClient = await createModularAccountAlchemyClient({
+            apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+            chain,
+            signer: new WalletClientSigner(walletClient, "json-rpc"),
+          });
+          setSmartAccount(smartAccountClient);
+          setConnectedAddress(smartAccountClient.getAddress());
+      } else {
+        setConnectedAddress(address);
+      }
+    };
+    handleSmartWallet();
+  }, [address, useSmartWallet, walletClient]);
 
   return (
     <main className={`flex flex-col items-center justify-between gap-y-16`}>
       <div className="flex flex-row items-center gap-x-4">
         <div className="flex flex-row items-center gap-x-4">
           Wallet Address :{" "}
-          <Chip variant="outlined" color="primary" label={connectedAddress} />
+            <Chip variant="outlined" color="primary" label={connectedAddress == undefined ? <CircularProgress size={12} /> : connectedAddress} />
         </div>
         <FormControlLabel
           control={
