@@ -11,8 +11,6 @@ import {
 import { Rubik_Burned } from "next/font/google";
 import { useEffect, useState } from "react";
 
-import { createModularAccountAlchemyClient } from "@alchemy/aa-alchemy";
-import { WalletClientSigner, arbitrumSepolia } from "@alchemy/aa-core";
 import { propertyAbi, propertyAddress } from "@/lib";
 
 
@@ -21,7 +19,6 @@ const rubikBurned = Rubik_Burned({
   weight: "400",
 });
 
-const chain = arbitrumSepolia;
 
 export default function Page() {
   const [connectedAddress, setConnectedAddress] = useState<any>();
@@ -36,27 +33,15 @@ export default function Page() {
   const readContractData = useReadContract({
     address: propertyAddress,
     abi: propertyAbi,
-    functionName: "getAllProperties",
+    functionName: "getProperty",
+    args: [1715963182]
   })
-
-  useEffect(() => {
-    console.log(readContractData)
-  }, [readContractData])
 
   useEffect(() => {
     const handleSmartWallet = async () => {
       setConnectedAddress(undefined);
       if (useSmartWallet) {
-        const smartAccountClient = await createModularAccountAlchemyClient({
-          apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
-          chain,
-          signer: new WalletClientSigner(walletClient, "json-rpc"),
-          gasManagerConfig: {
-            policyId: process.env.NEXT_PUBLIC_ALCHEMY_GAS_MANAGER_POLICY_ID!,
-          },
-        });
-        setSmartAccount(smartAccountClient);
-        setConnectedAddress(smartAccountClient.getAddress());
+        setConnectedAddress("Smart Wallet");
       } else {
         setConnectedAddress(address);
       }
@@ -91,14 +76,13 @@ export default function Page() {
           }
           label="Use Smart Wallet"
         />
-        <Chip variant="outlined" color={"primary"} label={readContractData.isLoading || readContractData.isRefetching ?<CircularProgress size={12} /> :  readContractData.data+""} />
       </div>
       <h2
         className={`text-2xl font-bold tracking-tight text-gray-200 sm:text-4xl ${rubikBurned.className}`}
       >
         My Properties
       </h2>
-      <PropertyList />
+      {readContractData.isLoading || readContractData.isRefetching ?<CircularProgress size={12} /> : <PropertyList properties={readContractData != undefined ? [readContractData.data] : []} />}
     </main>
   );
 }

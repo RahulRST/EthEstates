@@ -58,17 +58,13 @@ export const PropertyCard = ({ property }: { property: Property }) => {
           </Box>
           <Box className="flex justify-end items-center">
             <Typography variant="body2" component="p" className="mr-2">
-              {price} ETH/month
+              {price+""} ETH/month
             </Typography>
-            {/* Lease status indicator */}
             {leased ? (
               <Typography variant="body2" color="error" className="mb-2">
                 Leased
               </Typography>
             ) : (<></>
-              // <Button variant="contained" color="primary" onClick={handleLeaseNow} className="rounded-full px-4 py-2 bg-transparent hover:bg-opacity-75 text-white font-bold shadow-sm backdrop-blur-sm backdrop-filter backdrop-grayscale-0 hover:backdrop-grayscale-5">
-              //   Lease Now
-              // </Button>
             )}
           </Box>
         </CardContent>
