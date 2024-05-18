@@ -8,6 +8,7 @@ import { http } from "viem";
 import { arbitrum, arbitrumSepolia as wArbitrumSepolia, goerli, mainnet, sepolia } from "viem/chains";
 
 import { ThirdwebProvider } from "thirdweb/react";
+import { createThirdwebClient } from "thirdweb";
 
 export const wagmiConfig = wagmiCreateConfig({
   chains: [mainnet, goerli, wArbitrumSepolia, sepolia, arbitrum],
@@ -19,6 +20,10 @@ export const wagmiConfig = wagmiCreateConfig({
     [sepolia.id]: http(),
     [arbitrum.id]: http(),
   },
+});
+
+export const thirdWebClient = createThirdwebClient({
+  clientId: process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID!,
 });
 
 const queryClient = new QueryClient();

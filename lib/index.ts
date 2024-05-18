@@ -1,2 +1,2 @@
 export { propertyAbi, propertyAddress } from './constants';
-export { Provider } from "./Provider"
+export { Provider, thirdWebClient } from "./Provider"

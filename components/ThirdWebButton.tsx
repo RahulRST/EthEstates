@@ -2,17 +2,14 @@
 import {
     ConnectButton,
   } from "thirdweb/react";
-import { createThirdwebClient } from "thirdweb";
 import { arbitrumSepolia } from "thirdweb/chains";
   import {
     createWallet,
     walletConnect,
     inAppWallet,
   } from "thirdweb/wallets";
+import { thirdWebClient } from "@/lib";
   
-  const client = createThirdwebClient({
-    clientId: process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID!,
-  });
   
   const wallets = [
     createWallet("io.metamask"),
@@ -35,7 +32,7 @@ import { arbitrumSepolia } from "thirdweb/chains";
   export function ThirdWebButton() {
     return (
         <ConnectButton
-          client={client}
+          client={thirdWebClient}
           // wallets={wallets}
           accountAbstraction={{
             chain: arbitrumSepolia,

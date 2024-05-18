@@ -3,6 +3,7 @@
 import { PropertyList } from "@/components";
 import { useReadContract, useWriteContract } from "wagmi";
 import { useActiveAccount } from "thirdweb/react";
+
 import {
   Chip,
   CircularProgress,
@@ -12,12 +13,10 @@ import { useEffect, useState } from "react";
 
 import { propertyAbi, propertyAddress } from "@/lib";
 
-
 const rubikBurned = Rubik_Burned({
   subsets: ["latin"],
   weight: "400",
 });
-
 
 export default function Page() {
   const [connectedAddress, setConnectedAddress] = useState<any>();
@@ -59,7 +58,7 @@ export default function Page() {
       >
         My Properties
       </h2>
-      {readContractData.isLoading || readContractData.isRefetching ?<CircularProgress size={12} /> : <PropertyList properties={readContractData != undefined ? [readContractData.data] : []} />}
+      {readContractData.isLoading || readContractData.isRefetching ?<CircularProgress size={12} /> : <PropertyList properties={readContractData.data != undefined ? [readContractData.data] : []} />}
     </main>
   );
 }
