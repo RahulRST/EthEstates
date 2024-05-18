@@ -9,9 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@dynamic-labs/ethereum": "^2.0.6",
-    "@dynamic-labs/sdk-react-core": "^2.0.6",
-    "@dynamic-labs/wagmi-connector": "^2.0.6",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@headlessui/react": "^2.0.3",
