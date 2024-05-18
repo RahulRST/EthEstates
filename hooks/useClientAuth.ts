@@ -1,17 +1,17 @@
 "use client"
 
 import { useEffect, useState } from 'react';
-import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
+import { useActiveWalletConnectionStatus } from "thirdweb/react";
 
 export const useClientAuth = () => {
   const [isClient, setIsClient] = useState(false);
-  const { isAuthenticated } = useDynamicContext();
+  const status = useActiveWalletConnectionStatus();
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   return {
-    isAuthenticated: isClient && isAuthenticated
+    isAuthenticated: isClient && status == "connected",
   };
 };

@@ -4,8 +4,7 @@ const navigation: any[] = [
   // { name: "Home", href: "/" },
 ];
 
-import { DynamicWidget } from "../DynamicWidget";
-
+import { ThirdWebButton } from "@/components";
 import Image from "next/image";
 
 export const Header = () => {
@@ -40,7 +39,7 @@ export const Header = () => {
             ))}
           </div>
           <div className="flex flex-1 lg:justify-end">
-            <DynamicWidget />
+            <ThirdWebButton />
           </div>
         </div>
       </nav>

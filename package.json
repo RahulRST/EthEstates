@@ -25,6 +25,7 @@
     "pino-pretty": "^11.0.0",
     "react": "^18",
     "react-dom": "^18",
+    "thirdweb": "^5.22.1",
     "viem": "^2.10.8",
     "wagmi": "^2.8.7"
   },
