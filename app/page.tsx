@@ -27,8 +27,7 @@ export default function Page() {
   const readContractData = useReadContract({
     address: propertyAddress,
     abi: propertyAbi,
-    functionName: "getProperty",
-    args: [1715963182]
+    functionName: "getAllProperties",
   })
 
   useEffect(() => {
@@ -58,7 +57,7 @@ export default function Page() {
       >
         My Properties
       </h2>
-      {readContractData.isLoading || readContractData.isRefetching ?<CircularProgress size={12} /> : <PropertyList properties={readContractData.data != undefined ? [readContractData.data] : []} />}
+      {readContractData.isLoading || readContractData.isRefetching ?<CircularProgress size={12} /> : <PropertyList properties={readContractData.data != undefined ? readContractData.data : []} />}
     </main>
   );
 }

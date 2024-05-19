@@ -33,7 +33,7 @@ import { thirdWebClient } from "@/lib";
     return (
         <ConnectButton
           client={thirdWebClient}
-          // wallets={wallets}
+          wallets={wallets}
           accountAbstraction={{
             chain: arbitrumSepolia,
             sponsorGas: true,
