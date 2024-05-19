@@ -5,6 +5,7 @@ const navigation: any[] = [
 ];
 
 import Image from "next/image";
+import { DynamicButton } from "./DynamicButton";
 
 export const Header = () => {
   return (
@@ -38,7 +39,7 @@ export const Header = () => {
             ))}
           </div>
           <div className="flex flex-1 lg:justify-end">
-            Login
+            <DynamicButton />
           </div>
         </div>
       </nav>

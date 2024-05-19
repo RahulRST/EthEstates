@@ -1,6 +1,9 @@
 "use client";
 
 import { createConfig as wagmiCreateConfig, WagmiProvider } from "wagmi";
+import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
+import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
+import { DynamicWagmiConnector } from "@dynamic-labs/wagmi-connector";
 
 import { http } from "viem";
 import {
@@ -28,10 +31,17 @@ const queryClient = new QueryClient();
 
 export function Provider({ children }: any) {
   return (
+    <DynamicContextProvider
+      settings={{
+        environmentId: process.env.NEXT_PUBLIC_DYNAMIC_ENVID,
+        walletConnectors: [EthereumWalletConnectors],
+      }}
+    >
       <WagmiProvider config={wagmiConfig}>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <DynamicWagmiConnector>{children}</DynamicWagmiConnector>
         </QueryClientProvider>
       </WagmiProvider>
+    </DynamicContextProvider>
   );
 }
