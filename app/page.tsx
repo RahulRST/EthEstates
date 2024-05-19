@@ -1,6 +1,6 @@
 "use client"
 import { PropertyList } from "@/components";
-import { useReadContract, TransactionButton } from "thirdweb/react";
+import { useReadContract } from "wagmi";
 import { useEffect } from "react";
 
 import {
@@ -8,9 +8,7 @@ import {
 } from "@mui/material";
 import { Rubik_Burned } from "next/font/google";
 
-import { propertyAbi, propertyAddress, thirdWebClient } from "@/lib";
-import { getContract } from "thirdweb";
-import { arbitrumSepolia } from "thirdweb/chains";
+import { propertyAbi, propertyAddress } from "@/lib";
 
 const rubikBurned = Rubik_Burned({
   subsets: ["latin"],
@@ -19,30 +17,15 @@ const rubikBurned = Rubik_Burned({
 
 export default function Page() {
 
-  const propertyContract = getContract({
-    address: propertyAddress,
-    client: thirdWebClient,
-    chain: arbitrumSepolia,
-  });
-
   const readContractData = useReadContract({
-    contract: propertyContract,
-    method: "function getAllProperties() public view returns (PropertyStruct[] memory)",
+    abi: propertyAbi,
+    address: propertyAddress,
+    functionName: "getAllProperties"
   })
 
   useEffect(() => {
     console.log(readContractData);
   }, [readContractData]);
-
-  useEffect(() => {
-    
-  })
-
-  // const readContractData = useReadContract({
-  //   address: propertyAddress,
-  //   abi: propertyAbi,
-  //   functionName: "getAllProperties",
-  // })
 
   return (
     <main className={`flex flex-col items-center justify-between gap-y-16`}>
