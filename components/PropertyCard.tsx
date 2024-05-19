@@ -1,5 +1,7 @@
 import { useClientAuth } from "@/hooks";
+import { propertyAbi, propertyAddress } from "@/lib";
 import { Card, CardContent, Typography, CardActionArea, CardMedia, Box } from "@mui/material";
+import { useWriteContract } from "wagmi";
 
 interface Property {
   id: string; // Change data type based on actual storage on-chain
@@ -16,8 +18,10 @@ interface Property {
 }
 
 export const PropertyCard = ({ property }: { property: Property }) => {
-  const { image, name, owner, location, price, description, leased } = property;
+  const { id, image, name, owner, location, price, description, leased } = property;
   const { isAuthenticated } = useClientAuth();
+
+  const { writeContract } = useWriteContract();
   
   const handleLeaseNow = async () => {
     if (!isAuthenticated) {
@@ -27,7 +31,14 @@ export const PropertyCard = ({ property }: { property: Property }) => {
       alert("This property is already leased.");
       return;
     }
-    alert("Lease Now button clicked!");
+    // Call the lease function in the smart contract
+    writeContract({
+      address: propertyAddress,
+      abi: propertyAbi,
+      functionName: "requestLease",
+      args: [id],
+    });
+    alert("Lease request sent. Please wait for the owner to approve.")
   };
 
   return (

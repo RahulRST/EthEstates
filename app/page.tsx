@@ -1,17 +1,16 @@
-"use client";
-
+"use client"
 import { PropertyList } from "@/components";
-import { useReadContract, useWriteContract } from "wagmi";
-import { useActiveAccount } from "thirdweb/react";
+import { useReadContract, TransactionButton } from "thirdweb/react";
+import { useEffect } from "react";
 
 import {
-  Chip,
   CircularProgress,
 } from "@mui/material";
 import { Rubik_Burned } from "next/font/google";
-import { useEffect, useState } from "react";
 
-import { propertyAbi, propertyAddress } from "@/lib";
+import { propertyAbi, propertyAddress, thirdWebClient } from "@/lib";
+import { getContract } from "thirdweb";
+import { arbitrumSepolia } from "thirdweb/chains";
 
 const rubikBurned = Rubik_Burned({
   subsets: ["latin"],
@@ -19,45 +18,40 @@ const rubikBurned = Rubik_Burned({
 });
 
 export default function Page() {
-  const [connectedAddress, setConnectedAddress] = useState<any>();
-  const account = useActiveAccount();
 
-  const { writeContract } = useWriteContract();
+  const propertyContract = getContract({
+    address: propertyAddress,
+    client: thirdWebClient,
+    chain: arbitrumSepolia,
+  });
 
   const readContractData = useReadContract({
-    address: propertyAddress,
-    abi: propertyAbi,
-    functionName: "getAllProperties",
+    contract: propertyContract,
+    method: "function getAllProperties() public view returns (PropertyStruct[] memory)",
   })
 
   useEffect(() => {
-    setConnectedAddress(account?.address ?? undefined);
-  }, [account]);
+    console.log(readContractData);
+  }, [readContractData]);
+
+  useEffect(() => {
+    
+  })
+
+  // const readContractData = useReadContract({
+  //   address: propertyAddress,
+  //   abi: propertyAbi,
+  //   functionName: "getAllProperties",
+  // })
 
   return (
     <main className={`flex flex-col items-center justify-between gap-y-16`}>
-      <div className="flex flex-row items-center gap-x-4">
-        <div className="flex flex-row items-center gap-x-4">
-          Wallet Address :{" "}
-          <Chip
-            variant="outlined"
-            color="primary"
-            label={
-              connectedAddress == undefined ? (
-                <CircularProgress size={12} />
-              ) : (
-                connectedAddress
-              )
-            }
-          />
-        </div>
-      </div>
       <h2
         className={`text-2xl font-bold tracking-tight text-gray-200 sm:text-4xl ${rubikBurned.className}`}
       >
         My Properties
       </h2>
-      {readContractData.isLoading || readContractData.isRefetching ?<CircularProgress size={12} /> : <PropertyList properties={readContractData.data != undefined ? readContractData.data : []} />}
+      {readContractData.isLoading || readContractData.isRefetching ?<CircularProgress /> : <PropertyList properties={readContractData.data != undefined ? readContractData.data : []} />}
     </main>
   );
 }
