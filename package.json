@@ -9,9 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@alchemy/aa-accounts": "^3.14.1",
-    "@alchemy/aa-alchemy": "^3.14.1",
-    "@alchemy/aa-core": "^3.12.3",
     "@dynamic-labs/ethereum": "^2.0.7",
     "@dynamic-labs/sdk-react-core": "^2.0.7",
     "@dynamic-labs/wagmi-connector": "^2.0.7",
