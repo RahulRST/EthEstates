@@ -4,17 +4,15 @@ import { Card, CardContent, Typography, CardActionArea, CardMedia, Box } from "@
 import { useWriteContract } from "wagmi";
 
 interface Property {
-  id: string; // Change data type based on actual storage on-chain
+  id: string; 
   name: string;
   description: string;
-  price: number; // Assuming price is returned as a number
+  price: number;
   location: string;
   image: string;
   owner: string;
   leased: boolean;
-  lessee?: string; // Optional lessee
-  leaseStart?: number; // Optional lease start timestamp (converted to a number)
-  leaseEnd?: number;   // Optional lease end timestamp (converted to a number)
+  lessee?: string;
 }
 
 export const PropertyCard = ({ property }: { property: Property }) => {
