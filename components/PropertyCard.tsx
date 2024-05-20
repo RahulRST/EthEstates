@@ -1,6 +1,7 @@
 import { useClientAuth } from "@/hooks";
 import { propertyAbi, propertyAddress } from "@/lib";
 import { Card, CardContent, Typography, CardActionArea, CardMedia, Box } from "@mui/material";
+import { parseEther } from "viem";
 import { useWriteContract } from "wagmi";
 
 interface Property {
@@ -17,6 +18,7 @@ interface Property {
 
 export const PropertyCard = ({ property }: { property: Property }) => {
   const { id, image, name, owner, location, price, description, leased } = property;
+  const actualPrice = Number.parseFloat(price.toString()) / Number.parseFloat("1000000000000000000");
   const { isAuthenticated } = useClientAuth();
 
   const { writeContract } = useWriteContract();
@@ -29,12 +31,14 @@ export const PropertyCard = ({ property }: { property: Property }) => {
       alert("This property is already leased.");
       return;
     }
+    console.log(price);
     // Call the lease function in the smart contract
     writeContract({
       address: propertyAddress,
       abi: propertyAbi,
       functionName: "requestLease",
       args: [id],
+      value: BigInt(price)
     });
     alert("Lease request sent. Please wait for the owner to approve.")
   };
@@ -67,7 +71,7 @@ export const PropertyCard = ({ property }: { property: Property }) => {
           </Box>
           <Box className="flex justify-end items-center">
             <Typography variant="body2" component="p" className="mr-2">
-              {price+""} ETH/month
+              {actualPrice} ETH/month
             </Typography>
             {leased ? (
               <Typography variant="body2" color="error" className="mb-2">
