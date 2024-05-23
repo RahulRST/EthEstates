@@ -29,7 +29,7 @@ export default function Page() {
 
   return (
     <main className={`flex flex-col items-center justify-between gap-y-16`}>
-      <AccountManager />
+      {/* <AccountManager /> */}
       <h2
         className={`text-2xl font-bold tracking-tight text-gray-200 sm:text-4xl ${rubikBurned.className}`}
       >

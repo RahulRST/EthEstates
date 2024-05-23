@@ -9,7 +9,7 @@ import { LockOutlined } from '@mui/icons-material';
 import { useClientAuth } from '@/hooks';
 import { useEffect, useState } from 'react';
 import { propertyAbi, propertyAddress } from '@/lib';
-import { useReadContract } from 'wagmi';
+import { useReadContract, useWriteContract } from 'wagmi';
 
 const styles = {
   avatar: {
@@ -31,17 +31,33 @@ export const DynamicButton = () => {
 
   const [isOwner, setIsOwner] = useState(false);
 
-  const readContractData = useReadContract({
+  const { writeContract } = useWriteContract();
+
+  const readOwner = useReadContract({
     abi: propertyAbi,
     address: propertyAddress,
     functionName: "owner"
   })
 
+  const readBalance = useReadContract({
+    abi: propertyAbi,
+    address: propertyAddress,
+    functionName: "getBalance",
+  });
+
+  const handleWithdraw = () => {
+    writeContract({
+      address: propertyAddress,
+      abi: propertyAbi,
+      functionName: "withdraw",
+    });
+  };
+
   useEffect(() => {
-    if (readContractData.data) {
-      setIsOwner(readContractData.data === address);
+    if (readOwner.data && readBalance.data) {
+      setIsOwner(readOwner.data === address && (Number.parseFloat(readBalance.data.toString()) > 0));
     }
-  }, [readContractData.data, address]);
+  }, [readOwner.data, address, readBalance.data]);
 
   return (
     <div className="px-6 flex flex-row gap-x-4">
@@ -64,7 +80,7 @@ export const DynamicButton = () => {
       <DynamicUserProfile variant='modal' />
       {isOwner && (
         <Button
-          onClick={() => console.log('Owner')}
+          onClick={handleWithdraw}
           variant='outlined'
           color='primary'
         >
